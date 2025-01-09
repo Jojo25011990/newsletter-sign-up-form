@@ -1,0 +1,238 @@
+@forward './reset';
+
+// *** Variables ***
+$color-primary: hsl(234, 29%, 20%);
+$color-secondary: hsl(4, 100%, 67%);
+$color-tertiary: hsl(235, 18%, 26%);
+
+$color-white: hsl(0, 0%, 100%);
+$color-black: #000;
+
+$color-grey: hsl(231, 7%, 60%);
+
+$color-bg-main: hsl(235, 18%, 26%);
+
+// *** Mixins ***
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin font-settings($size, $weight, $line-height: null) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+// *** Main Styles ***
+
+html {
+  @media (max-width: 960px) {
+    font-size: 50%;
+  }
+
+  @media (max-width: 765px) {
+    font-size: 45%;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 50%;
+  }
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: $color-white;
+  color: $color-primary;
+  font-family: 'Roboto', serif;
+
+  @include font-settings(1.6rem, 400, 150%);
+}
+
+.main {
+  width: 100%;
+  max-width: 144rem;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: $color-bg-main;
+
+  @include flex-center;
+
+  @media (max-width: 585px) {
+    min-height: 84.2rem;
+  }
+
+  //   @media (max-width: 550px) {
+  //     min-height: 84.2rem;
+  //   }
+
+  // *** Container ***
+  &__container {
+    max-width: 92.8rem;
+    background-color: $color-white;
+    border-radius: 3.6rem;
+    box-shadow: 0 1.5rem 6rem rgba($color: $color-black, $alpha: 0.25);
+    padding: 2.5rem 2.5rem 2.5rem 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 585px) {
+      flex-direction: column;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  // *** Main Content ***
+  &__content {
+    max-width: 37.6rem;
+    margin: auto 6.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    @media (max-width: 585px) {
+      order: 2;
+      margin: 4rem 6.4rem;
+    }
+
+    &-heading {
+      @include font-settings(5.6rem, 700, 100%);
+    }
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+    }
+  }
+
+  // *** Form ***
+
+  &__form {
+    height: 16.2rem;
+    display: flex;
+    flex-direction: column;
+
+    &-box {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    &-errMessage {
+      color: $color-secondary;
+      @include font-settings(1.2rem, 700, 150%);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+
+      &.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    &-label {
+      margin-bottom: 0.8rem;
+      @include font-settings(1.2rem, 700, 150%);
+    }
+
+    &-email {
+      height: 5.6rem;
+      line-height: 5.6rem;
+      padding-left: 2.5rem;
+      margin-bottom: 2.4rem;
+      border: 0.1rem solid rgba($color: $color-primary, $alpha: 0.25);
+      border-radius: 0.8rem;
+
+      &::placeholder {
+        opacity: 0.5;
+      }
+
+      &:focus {
+        border: 0.1rem solid $color-primary;
+        outline: none;
+      }
+    }
+
+    &-email.email-error {
+      background-color: rgba($color: $color-secondary, $alpha: 0.15);
+      color: $color-secondary;
+      border-color: $color-secondary;
+    }
+
+    &-btn {
+      height: 5.6rem;
+      color: $color-white;
+      background-color: $color-primary;
+      line-height: 5.6rem;
+      border-radius: 0.8rem;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      font-weight: 700;
+
+      &:hover,
+      &:active {
+        background-color: $color-secondary;
+        box-shadow: 0 1.6rem 3.2rem rgba($color: $color-secondary, $alpha: 0.5);
+      }
+    }
+  }
+
+  &-imgBox {
+    order: 1;
+  }
+
+  // *** Form Popup Message **
+  &__popup {
+    display: block;
+    width: 50.4rem;
+    height: 52rem;
+    border-radius: 3.6rem;
+    padding: 6.4rem;
+    background-color: $color-white;
+    box-shadow: 0 1.5rem 6rem rgba($color: $color-black, $alpha: 0.25);
+
+    &.hidden {
+      display: none;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+    }
+
+    &-icon {
+      width: 6.4rem;
+      height: 6.4rem;
+    }
+
+    &-heading {
+      @extend .main__content-heading;
+    }
+
+    &-email {
+      font-weight: 700;
+    }
+
+    &-btn {
+      @extend .main__form-btn;
+      text-align: center;
+    }
+  }
+}
